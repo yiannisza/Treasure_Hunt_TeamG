@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Challenges</title>
+    <link rel="stylesheet" href="css/Styles.css"/>
+</head>
+<body>
+<h1>All Challenges</h1>
+<ul id="challenges">
+
+</ul>
+<script>
+    var cookies = document.cookie;
+    console.log(cookies);
+    fetch("https://codecyprus.org/th/api/list")
+    .then(response => response.json()) //Parse JSON text to JavaScript object
+    .then(jsonObject => {
+        console.log(jsonObject);
+        for(let i=0; i<jsonObject.treasureHunts.length; i++){
+            let listItem = document.createElement("button");
+            listItem.innerHTML = "<a href='start.html?treasure-hunt-id=" + jsonObject.treasureHunts[i].uuid + "'  >"+ jsonObject.treasureHunts[i].name + "</a>";
+            challenges.appendChild(listItem);
+        }
+    });</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+body{
+    background-color: burlywood;
+}
+h2{
+    text-align: center;
+    background-color: chocolate;
+    font-size: 4vw;
+    padding: 10px;
+}
+h3{
+    font-size: 3vw;
+    margin:auto;
+    width:80%;
+    background-color: beige;
+    color:black;
+    padding: 10px;
+}
+li{
+    text-align: center;
+    list-style-position: inside;
+    font-size: 2vw;
+}
+ul{
+    text-align: center;
+    font-size:3vw;
+}

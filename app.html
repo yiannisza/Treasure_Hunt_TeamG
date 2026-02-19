@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/Styles.css"/>
+</head>
+<body onload="getquestion()">
+
+<h1 id="question"></h1>
+<div id="options"></div>
+<div id="skip"></div>
+
+<div id="location">
+
+</div>
+<div class="score">
+<span>Score :</span>
+<span id="Displayscore"></span></div>
+<span style="font-size: 50px; font-weight:bold;">Time:</span>
+<span class="timer">30:00</span>
+<script type="text/javascript" src="./instascan.min.js"></script>
+<p>This is the QR code Reader. Only use when requested by the question</p>
+<video id="preview"></video>
+<div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content">
+</div>
+<button id="start">start</button>
+<button id="change">change</button>
+<script src="app.js"></script>
+<script>
+    var opts = {
+
+        continuous: true,
+        video: document.getElementById('preview'),
+        mirror: false,
+        captureImage: false,
+        backgroundScan: true,
+// Only applies to continuous mode. The period, in milliseconds, before the same QR
+// code will be recognized in succession. Default 5000 (5 seconds).
+        refractoryPeriod: 5000,
+        scanPeriod: 1
+    };
+
+    let camera_index = 0;
+    let all_cameras;
+
+    var scanner = new Instascan.Scanner(opts);
+    document.getElementById("start").addEventListener('click',function(){
+        Instascan.Camera.getCameras().then(function (cameras) {
+            all_cameras = cameras;
+            if (cameras.length > 0) {
+                scanner.start(cameras[camera_index]);
+            }
+            else{
+                console.error('No cameras found.');
+                alert("No cameras found.");
+            }
+
+
+        }).catch(function (e) {
+            console.error(e);
+        });
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+            document.getElementById("content").innerHTML = content;
+            scanner.stop();
+        });
+
+    });
+
+    document.getElementById("change").addEventListener('click',function(){
+        camera_index++;
+        if (camera_index >= all_cameras.length) {
+            camera_index = 0;
+        }
+        console.log(camera_index);
+        scanner.start(all_cameras[camera_index]);
+
+    });
+</script>
+<style>
+    #text{
+        text-align: center;
+        border:1px solid black;
+        background-color: white;
+        font-weight: bold;
+        font-size: 1.5vw;
+        margin:auto;
+        margin-top:20px;
+        width:50%;
+    }
+</style>
+</body>
+</html>

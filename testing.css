@@ -1,0 +1,8 @@
+table {
+    width: 100%;
+    border: 1px solid black;
+}
+th,td{
+    border-bottom: 1px solid saddlebrown;
+    text-align: left;
+}

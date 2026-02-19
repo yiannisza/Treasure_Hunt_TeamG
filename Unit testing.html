@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/Styles.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header class="header" id="headerid">
+    <div class="header-image">
+        <img src="images/pirate.png" alt="logo th" id="logo">
+        <div class="header-title">Treasure Hunt</div>
+        <div class="header-title" id="score" style="display: none;"></div>
+    </div>
+
+    <nav class="header-nav">
+        <ul class="burger-list">
+            <li><a href="index.html">Main page</a></li>
+            <li><a href="notes.html">Notes</a></li>
+            <li><a href="test.html">Test</a></li>
+        </ul>
+    </nav>
+</header>
+<p>TEST CASES</p>
+<table class="test-results-table">
+    <tr>
+    <th>ID</th>
+    <th>Test Case</th>
+    <th>Functions Tested</th>
+    <th>Description</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td>Accepting a name typed by the user.</td>
+        <td>startTreasureHunt()</td>
+        <td>After the user inserts a valid name to begin. They press the submit button which n turn will take the session id of the current treasur hunt and the name typed in the text box.After its done it redirects the player to the app.html.</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Getting the location of the user.</td>
+        <td>GetLocation()</td>
+        <td>After the press of a button this fuction should take the geological location of the user to use in a question that needs a location.</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Getting a question after answering one correctly.</td>
+        <td>GetQuestion()</td>
+        <td>After answering a question correctly the function should receive the new values and override the given fields in the html.</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Skipping a question if available to do so</td>
+        <td>Skip()</td>
+        <td>If a question can be skipped a player can press a button that willl move on to the next question and deduct points for skipping.</td>
+    </tr>
+
+    <tr>
+        <td>5</td>
+        <td>Show the leaderboard sorted</td>
+        <td>HandleLeaderboard)</td>
+        <td>After finishing the treasure hunt the user will be sent to the leaderboard.html where the leaderboard should be displayed/.</td>
+    </tr>
+</table>
+<p>TEST RESULTS</p>
+<table class="test-results-table">
+    <tr>
+        <th>Test ID</th>
+        <th>Input</th>
+        <th>Expected Output</th>
+        <th>Actual output</th>
+        <th>Result</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td>Team A</td>
+        <td>Goes to the app.html</td>
+        <td>Null</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Get Location()</td>
+        <td>Location recorded and question could be answered</td>
+        <td>No location value has been stored</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Get Location()</td>
+        <td>Location recorded and question could be answered</td>
+        <td>Location was way off about 1.6km away even though the user was in the requested position</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Get Location()</td>
+        <td>Location recorded and question could be answered</td>
+        <td>The Location was accurately recorded and the question was answered</td>
+        <td>PASS</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>GetQuestion()</td>
+        <td>Obtain the next question and apply it to the given html tags</td>
+        <td>Didnt override the previous values but added the new ones on top of the others resulting in a difficult to manage situation</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Skip()</td>
+        <td>Question has been skipped successfully and points were deducted</td>
+        <td>Question didnt get skipped and resulted in the question sequence to malfunction</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Skip()</td>
+        <td>Question has been skipped successfully and points were deducted</td>
+        <td>Question was successfully skipped without any errors</td>
+        <td>PASS</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>HandleLeaderboard()</td>
+        <td>The leaderboard was loaded and sorted in ascending order depending on player score.</td>
+        <td>The leader board wasnt loaded at all</td>
+        <td>FAIL</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>HandleLeaderboard()</td>
+        <td>The leaderboard was loaded and sorted in ascending order depending on player score.</td>
+        <td>The leader board has successfully loaded and the values were in ascending order</td>
+        <td>PASS</td>
+    </tr>
+</table>
+<style>
+    .test-results-table{
+        margin:auto;
+        text-align: center;
+        color: #8b4513;
+        background-color:white;
+        font-weight: bold;
+        border:1px solid black;
+    }
+    th{
+        text-align: center;
+        color: white;
+        background-color:#8b4513;
+        font-weight: bold;
+        border:1px solid black;
+
+    }
+    td{
+        padding-left:10px;
+        padding-right:10px;
+        margin:auto;
+        text-align: center;
+        font-weight: bold;
+        border:1px solid black;
+    }
+</style>
+</body>
+</html>
