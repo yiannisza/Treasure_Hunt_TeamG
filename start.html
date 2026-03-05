@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start Hunt</title>
+    <link rel="stylesheet" href="style.css"> <!-- same stylesheet as page 1 -->
+</head>
+
+<body>
+
+<!-- HERO SECTION (same style as first page) -->
+<section class="hero">
+    <h1>Start Your Treasure Hunt</h1>
+    <p>Enter your name to begin your adventure and uncover hidden treasures.</p>
+</section>
+
+<!-- FORM SECTION -->
+<section class="features">
+    <div class="feature-card" style="max-width: 400px; margin: auto; text-align: center;">
+        <h3>Your Journey Begins</h3>
+        <form id="name">
+            <input id="playername" type="text" placeholder="Enter Team Name" style="padding: 10px; width:90%; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc;">
+            <button class="btn" onclick="startTreasureHunt(); return false">Begin Treassure Hunt</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    function setCookie(cookieName, cookieValue, expireDays) {
+        let date = new Date();
+        date.setTime(date.getTime() + (expireDays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + date.toUTCString();
+        document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+    }
+
+    function startTreasureHunt() {
+        const params = new URLSearchParams(window.location.search);
+        const treasureHuntID = params.get("treasure-hunt-id");
+
+        if (!treasureHuntID) {
+            alert("Error opening Treasure Hunt");
+        } else {
+            var playerName = document.getElementById("playername").value;
+            const url = "https://codecyprus.org/th/api/start?player=" + playerName + "&app=Team-A-App&treasure-hunt-id=" + treasureHuntID;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(jsonObject => {
+                    if (jsonObject.status === "OK") {
+                        setCookie("SES", jsonObject.session, 20);
+                        setCookie("NOQ", jsonObject.numOfQuestions, 20);
+                        setCookie("NOP", playerName, 20);
+                        window.location.assign("app.html");
+                    }
+                });
+        }
+    }
+</script>
+
+</body>
+</html>
