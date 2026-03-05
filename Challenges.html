@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose a Hunt – Team G</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" class="nav-logo">⚓ Team G</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="notes.html">Notes</a></li>
+    </ul>
+</nav>
+
+<section class="hero" style="padding: 80px 24px 50px;">
+    <div class="hero-badge">Available Hunts</div>
+    <h1>Choose Your <span>Adventure</span></h1>
+    <p>Select a treasure hunt below to begin your session.</p>
+</section>
+
+<div class="divider"></div>
+
+<section style="padding: 0 0 60px;">
+    <p class="status-msg" id="statusMsg">Loading available hunts…</p>
+    <ul class="hunt-list" id="huntsList"></ul>
+</section>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <p class="footer-copy">© 2026 Treasure Hunt Adventure · Team G</p>
+    </div>
+</footer>
+
+<script>
+    function loadHunts() {
+        document.getElementById("statusMsg").textContent = "Loading available hunts...";
+
+        fetch("https://codecyprus.org/th/api/list")
+            .then(function(response) { return response.json(); })
+            .then(function(jsonObject) {
+                console.log(jsonObject);
+
+                if (jsonObject.status !== "OK") {
+                    document.getElementById("statusMsg").textContent =
+                        "Error: " + (jsonObject.errorMessages || []).join(" ");
+                    return;
+                }
+
+                let hunts = jsonObject.treasureHunts;
+
+                if (!hunts || hunts.length === 0) {
+                    document.getElementById("statusMsg").textContent =
+                        "No active hunts available right now. Please try again later.";
+                    return;
+                }
+
+                document.getElementById("statusMsg").textContent =
+                    hunts.length + " hunt(s) available - pick one to start:";
+
+                let list = document.getElementById("huntsList");
+                list.innerHTML = "";
+
+                for (let i = 0; i < hunts.length; i++) {
+                    let huntID = hunts[i].uuid;
+                    let li = document.createElement("li");
+                    li.innerHTML = "<a href='start.html?treasure-hunt-id=" + huntID + "' class='hunt-item'>Map " + hunts[i].name + "</a>";
+                    list.appendChild(li);
+                }
+            })
+            .catch(function(err) {
+                console.error("Error loading hunts:", err);
+                document.getElementById("statusMsg").textContent =
+                    "Network error. Please check your connection and try again.";
+            });
+    }
+
+    window.onload = loadHunts;
+</script>
+
+</body>
+</html>

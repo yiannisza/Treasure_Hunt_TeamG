@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard – Treasure Hunt</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #scores-table {
+            margin: 20px auto;
+            width: 90%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #scores-table th {
+            background: #1e3a8a;
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+        }
+        #scores-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            text-align: center;
+        }
+        #scores-table tr:nth-child(even) td {
+            background: rgba(255,255,255,0.05);
+        }
+        #statusMsg {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 15px;
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="hero" style="padding: 60px 20px 30px;">
+    <h1>🏆 Leaderboard</h1>
+    <p id="statusMsg">Loading scores...</p>
+</section>
+
+<table id="scores-table">
+    <tr>
+        <th>Rank</th>
+        <th>Player</th>
+        <th>Score</th>
+        <th>Finished</th>
+    </tr>
+</table>
+
+<section class="features" style="padding: 30px 20px;">
+    <a href="Challenges.html" class="btn">Play Again</a>
+    <a href="index.html" class="btn" style="background:#334155; margin-left:10px;">Home</a>
+</section>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-copy">© 2026 Treasure Hunt · Team G</div>
+    </div>
+</footer>
+
+<script>
+    // Read a cookie value by name
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') { c = c.substring(1); } // Fixed == to ===
+            if (c.indexOf(name) === 0) { // Fixed == to ===
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    // Builds the table rows from the leaderboard response
+    function handleLeaderboard(data) {
+        console.log(data);
+
+
+        if (data['status'] !== "OK") { // Fixed != to !==
+            document.getElementById("statusMsg").textContent =
+                "Error: " + (data['errorMessages'] || []).join(" ");
+            return;
+        }
+
+        // Show hunt name and player count from the API response
+        document.getElementById("statusMsg").textContent =
+            (data['treasureHuntName'] || "Results") + " — " + data['numOfPlayers'] + " player(s)";
+
+        let options = { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', second:'2-digit' };
+        let scores = data['leaderboard'];
+        console.log("leaderboardArray", scores);
+        console.log("length: " + scores.length);
+
+        let table = document.getElementById("scores-table");
+
+        for (let i = 0; i < scores.length; i++) {
+            // API guide: completionTime of 0 means the player has not finished yet
+            let timeText = "Not finished";
+            if (scores[i]['completionTime'] && scores[i]['completionTime'] > 0) {
+                let d = new Date(scores[i]['completionTime']);
+                timeText = d.toLocaleDateString("en-GB", options);
+            }
+            table.innerHTML += "<tr>"
+                + "<td>" + (i + 1)                 + "</td>"
+                + "<td>" + scores[i]['player']     + "</td>"
+                + "<td>" + scores[i]['score']      + "</td>"
+                + "<td>" + timeText                + "</td>"
+                + "</tr>";
+        }
+    }
+
+    // ── /leaderboard ──
+    // Fetches sorted scores for this session's hunt
+    function getLeaderBoard() {
+        let sessions = getCookie("SES");
+
+        if (!sessions || sessions === "") {
+            document.getElementById("statusMsg").textContent =
+                "No session found. Please play a game first.";
+            return;
+        }
+
+        let url = "https://codecyprus.org/th/api/leaderboard?session=" + sessions
+            + "&sorted&limit=20";
+
+        fetch(url, { method: "GET" })
+            .then(response => response.json())
+            .then(json => handleLeaderboard(json));
+    }
+
+    window.onload = function() {
+        getLeaderBoard();
+    };
+</script>
+
+</body>
+</html>

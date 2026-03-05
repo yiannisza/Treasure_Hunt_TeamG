@@ -2,28 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Start Hunt</title>
-    <link rel="stylesheet" href="style.css"> <!-- same stylesheet as page 1 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Hunt – Team G</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- HERO SECTION (same style as first page) -->
-<section class="hero">
-    <h1>Start Your Treasure Hunt</h1>
-    <p>Enter your name to begin your adventure and uncover hidden treasures.</p>
+<nav class="navbar">
+    <a href="index.html" class="nav-logo">⚓ Team G</a>
+    <ul class="nav-links">
+        <li><a href="Challenges.html">← Back</a></li>
+    </ul>
+</nav>
+
+<section class="hero" style="padding: 60px 24px 30px;">
+    <div class="hero-badge">New Session</div>
+    <h1>Ready to <span>Hunt?</span></h1>
+    <p>Enter your team name below to register your session and start the adventure.</p>
 </section>
 
-<!-- FORM SECTION -->
-<section class="features">
-    <div class="feature-card" style="max-width: 400px; margin: auto; text-align: center;">
-        <h3>Your Journey Begins</h3>
-        <form id="name">
-            <input id="playername" type="text" placeholder="Enter Team Name" style="padding: 10px; width:90%; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc;">
-            <button class="btn" onclick="startTreasureHunt(); return false">Begin Treassure Hunt</button>
-        </form>
+<div class="start-card">
+    <h2>🏴‍☠️ Enter Your Name</h2>
+    <p>Your name will appear on the leaderboard. Make it memorable!</p>
+
+    <div class="form-group">
+        <label for="playername">Team / Player Name</label>
+        <input
+                id="playername"
+                class="form-input"
+                type="text"
+                placeholder="e.g. Team G Legends"
+                maxlength="40"
+                autocomplete="off"
+        >
     </div>
-</section>
+
+    <button class="btn btn-primary" style="width:100%; margin-top:8px;"
+            onclick="startTreasureHunt()">
+        Begin Hunt →
+    </button>
+
+    <p id="startMsg" style="color: var(--text-muted); font-size:0.85rem; margin-top:14px;"></p>
+</div>
+
+<footer class="footer" style="margin-top:60px;">
+    <div class="footer-inner">
+        <p class="footer-copy">© 2026 Treasure Hunt Adventure · Team G</p>
+    </div>
+</footer>
 
 <script>
     function setCookie(cookieName, cookieValue, expireDays) {
@@ -33,28 +59,81 @@
         document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
     }
 
-    function startTreasureHunt() {
-        const params = new URLSearchParams(window.location.search);
-        const treasureHuntID = params.get("treasure-hunt-id");
+    // Get the treasure-hunt-id from the URL (set by Challenges.html)
+    let params = new URLSearchParams(window.location.search);
+    let resolvedHuntID = params.get("treasure-hunt-id");
 
-        if (!treasureHuntID) {
-            alert("Error opening Treasure Hunt");
-        } else {
-            var playerName = document.getElementById("playername").value;
-            const url = "https://codecyprus.org/th/api/start?player=" + playerName + "&app=Team-A-App&treasure-hunt-id=" + treasureHuntID;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(jsonObject => {
-                    if (jsonObject.status === "OK") {
-                        setCookie("SES", jsonObject.session, 20);
-                        setCookie("NOQ", jsonObject.numOfQuestions, 20);
-                        setCookie("NOP", playerName, 20);
-                        window.location.assign("app.html");
-                    }
-                });
-        }
+    // If no ID in the URL, auto-fetch the first available hunt
+    if (!resolvedHuntID) {
+        let msgEl = document.getElementById("startMsg");
+        msgEl.textContent = "Loading a hunt for you...";
+        fetch("https://codecyprus.org/th/api/list")
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data['status'] === "OK" && data['treasureHunts'] && data['treasureHunts'].length > 0) {
+                    resolvedHuntID = data['treasureHunts'][0]['uuid'];
+                    msgEl.textContent = "Hunt ready: " + data['treasureHunts'][0]['name'];
+                    msgEl.style.color = "#22c0a4";
+                } else {
+                    msgEl.textContent = "No hunts available right now.";
+                    msgEl.style.color = "#e05c5c";
+                }
+            })
+            .catch(function() {
+                msgEl.textContent = "Could not load hunts. Check your connection.";
+                msgEl.style.color = "#e05c5c";
+            });
     }
+
+    function startTreasureHunt() {
+        let msgEl = document.getElementById("startMsg");
+
+        if (!resolvedHuntID) {
+            msgEl.textContent = "Still loading a hunt, please wait a moment...";
+            msgEl.style.color = "#e05c5c";
+            return;
+        }
+
+        let playerName = document.getElementById("playername").value.trim();
+        if (!playerName) {
+            msgEl.textContent = "Please enter a player name to continue.";
+            msgEl.style.color = "#e05c5c";
+            return;
+        }
+
+        msgEl.textContent = "Starting your session...";
+        msgEl.style.color = "let(--text-muted)";
+
+        let url = "https://codecyprus.org/th/api/start?player=" + playerName +
+            "&app=Team-G-App&treasure-hunt-id=" + resolvedHuntID;
+
+        fetch(url)
+            .then(function(response) { return response.json(); })
+            .then(function(jsonObject) {
+                console.log(jsonObject);
+                if (jsonObject['status'] === "OK") {
+                    // Save to cookie (works when served via a web server)
+                    setCookie("SES", jsonObject['session'], 20);
+                    setCookie("NOQ", jsonObject['numOfQuestions'], 20);
+                    setCookie("NOP", playerName, 20);
+                    // ALSO pass session in the URL so app.html always has it
+                    window.location.assign("app.html?session=" + jsonObject['session'] + "&noq=" + jsonObject['numOfQuestions']);
+                } else {
+                    msgEl.textContent = (jsonObject['errorMessages'] || ["Unknown error."]).join(" ");
+                    msgEl.style.color = "#e05c5c";
+                }
+            })
+            .catch(function(err) {
+                console.error("Start error:", err);
+                msgEl.textContent = "Network error. Please try again.";
+                msgEl.style.color = "#e05c5c";
+            });
+    }
+
+    document.getElementById("playername")
+        .addEventListener("keydown", function(e) {
+            if (e.key === "Enter") startTreasureHunt();
+        });
 </script>
 
 </body>
