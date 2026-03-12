@@ -303,7 +303,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 10px;
     list-style: none;
     margin-bottom: 24px;
 }
@@ -324,7 +324,10 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 }
 
 /* Social icons */
-.social-icons {
+.social-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
     display: flex;
     justify-content: center;
     gap: 14px;
@@ -332,8 +335,8 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 }
 
 .social-icon-btn {
-    width: 42px;
-    height: 42px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     border: 1px solid var(--border);
     display: flex;
@@ -341,7 +344,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     justify-content: center;
     text-decoration: none;
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     transition: all 0.2s;
 }
 .social-icon-btn:hover {
