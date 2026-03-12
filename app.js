@@ -3,7 +3,7 @@
  * API: https://codecyprus.org/th/api/
  */
 
-//  Cookie helpers
+// Cookie helpers
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -23,12 +23,11 @@ function setCookie(cookieName, cookieValue, expireDays) {
     document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 }
 
-// ── Get session – URL param first, cookie as fallback
+// Get session – URL param first, cookie as fallback
 function getSession() {
     let urlParams = new URLSearchParams(window.location.search);
     let sessionFromURL = urlParams.get("session");
     if (sessionFromURL) {
-        // Save it into cookie so future calls also have it
         setCookie("SES", sessionFromURL, 20);
         return sessionFromURL;
     }
@@ -40,7 +39,7 @@ function getNumQuestions() {
     return urlParams.get("noq") || getCookie("NOQ") || "?";
 }
 
-// Countdown
+// Countdown timer
 let timeInterval;
 let remainingTime = 30 * 60;
 
@@ -70,7 +69,7 @@ function startTimer() {
     timeInterval = setInterval(updatetime, 1000);
 }
 
-//  Toast notification
+// Toast notification
 function showToast(message, type) {
     let toast = document.getElementById("toast");
     if (!toast) {
@@ -114,10 +113,7 @@ function getquestion() {
             // Question number
             let qNumEl = document.getElementById("question-number");
             if (qNumEl) {
-                let qNum = (jsonObject['currentQuestion'] !== undefined && jsonObject['currentQuestion'] !== null)
-                    ? jsonObject['currentQuestion']
-                    : "?";
-
+                let qNum = jsonObject['currentQuestion'] !== undefined ? jsonObject['currentQuestion'] : "?";
                 qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
             }
 
@@ -224,13 +220,14 @@ function getLocation() {
     );
 }
 
-// Answer
+// Answer  ← THE FIX: removed the broken jsonObject/qNumEl lines that don't belong here
 function Answer(ans) {
     let sessions = getSession();
-    let qIndex = jsonObject['currentQuestion'];
-    let qNum = (qIndex !== undefined && qIndex !== null) ? (qIndex + 1) : "?";
 
-    qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
+    if (!ans || ans === "") {
+        showToast("Please enter an answer first.", "info");
+        return;
+    }
 
     fetch("https://codecyprus.org/th/api/answer?session=" + sessions + "&answer=" + ans)
         .then(function(response) { return response.json(); })
@@ -252,7 +249,7 @@ function Answer(ans) {
         });
 }
 
-// Skip button
+// Skip
 function Skip() {
     let sessions = getSession();
     fetch("https://codecyprus.org/th/api/skip?session=" + sessions)
@@ -287,7 +284,7 @@ function getscore() {
         });
 }
 
-// Periodic location update every 2 minute
+// Periodic location update every 2 minutes
 setInterval(function() {
     if (getSession()) getLocationSilent();
 }, 2 * 60 * 1000);
