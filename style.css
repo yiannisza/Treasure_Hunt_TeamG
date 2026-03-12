@@ -234,6 +234,14 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 /* ═══════════════════════════════
    TEAM SECTION
 ═══════════════════════════════ */
+.team {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 60px 0;
+}
+
 .team-section {
     padding: 60px 24px;
     text-align: center;
