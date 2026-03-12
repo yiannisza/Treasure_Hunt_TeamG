@@ -3,7 +3,7 @@
  * API: https://codecyprus.org/th/api/
  */
 
-// Cookie helpers
+// Cookie helperss
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
