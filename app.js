@@ -227,11 +227,10 @@ function getLocation() {
 // Answer
 function Answer(ans) {
     let sessions = getSession();
+    let qIndex = jsonObject['currentQuestion'];
+    let qNum = (qIndex !== undefined && qIndex !== null) ? (qIndex + 1) : "?";
 
-    if (ans === "" || ans === undefined || ans === null) {
-        showToast("Please enter an answer first.", "info");
-        return;
-    }
+    qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
 
     fetch("https://codecyprus.org/th/api/answer?session=" + sessions + "&answer=" + ans)
         .then(function(response) { return response.json(); })
