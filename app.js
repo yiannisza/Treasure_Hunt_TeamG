@@ -113,7 +113,9 @@ function getquestion() {
             // Question number
             let qNumEl = document.getElementById("question-number");
             if (qNumEl) {
-                let qNum = jsonObject['currentQuestion'] !== undefined ? jsonObject['currentQuestion']  : "?";
+
+                // let qNum = jsonObject['currentQuestion'] !== undefined ? jsonObject['currentQuestion']  : "?";
+                let qNum = jsonObject["currentQuestionIndex"] + 1;
                 qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
             }
 
