@@ -2,7 +2,6 @@
  * app.js - Team G Treasure Hunt
  * API: https://codecyprus.org/th/api/
  */
-let currentQuestionNumber = null;
 
 //  Cookie helpers
 function getCookie(cname) {
@@ -89,17 +88,12 @@ function showToast(message, type) {
 
 // Get Question
 function getquestion() {
+    let sessions = getSession();
 
-    currentQuestionNumber = jsonObject['currentQuestion'];
-
-    let qNumEl = document.getElementById("question-number");
-    if (qNumEl) {
-        let qNum = (currentQuestionNumber !== null)
-            ? currentQuestionNumber
-            : "?";
-
-        qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
-    }
+    if (!sessions) {
+        showToast("No session found. Please start a new game.", "info");
+        setTimeout(function() { window.location.assign("Challenges.html"); }, 2000);
+        return;
     }
 
     fetch("https://codecyprus.org/th/api/question?session=" + sessions)
@@ -123,14 +117,12 @@ function getquestion() {
                 let qNum = (jsonObject['currentQuestion'] !== undefined && jsonObject['currentQuestion'] !== null)
                     ? jsonObject['currentQuestion']
                     : "?";
-                currentQuestionNumber = jsonObject['currentQuestion'];
-
 
                 qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
             }
 
             // Question text
-
+            document.getElementById("question").innerHTML = jsonObject['questionText'] || "";
 
             // Clear options
             let optionsEl = document.getElementById("options");
@@ -235,18 +227,11 @@ function getLocation() {
 // Answer
 function Answer(ans) {
     let sessions = getSession();
-    function Answer(ans) {
-        let sessions = getSession();
 
-        // Use stored question number
-        let qNum = (currentQuestionNumber !== null)
-            ? currentQuestionNumber
-            : "?";
-
-        let qNumEl = document.getElementById("question-number");
-        if (qNumEl) {
-            qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
-        }
+    if (ans === "" || ans === undefined || ans === null) {
+        showToast("Please enter an answer first.", "info");
+        return;
+    }
 
     fetch("https://codecyprus.org/th/api/answer?session=" + sessions + "&answer=" + ans)
         .then(function(response) { return response.json(); })
