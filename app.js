@@ -2,6 +2,7 @@
  * app.js - Team G Treasure Hunt
  * API: https://codecyprus.org/th/api/
  */
+let currentQuestionNumber = null;
 
 //  Cookie helpers
 function getCookie(cname) {
@@ -88,12 +89,17 @@ function showToast(message, type) {
 
 // Get Question
 function getquestion() {
-    let sessions = getSession();
 
-    if (!sessions) {
-        showToast("No session found. Please start a new game.", "info");
-        setTimeout(function() { window.location.assign("Challenges.html"); }, 2000);
-        return;
+    currentQuestionNumber = jsonObject['currentQuestion'];
+
+    let qNumEl = document.getElementById("question-number");
+    if (qNumEl) {
+        let qNum = (currentQuestionNumber !== null)
+            ? currentQuestionNumber
+            : "?";
+
+        qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
+    }
     }
 
     fetch("https://codecyprus.org/th/api/question?session=" + sessions)
@@ -117,12 +123,14 @@ function getquestion() {
                 let qNum = (jsonObject['currentQuestion'] !== undefined && jsonObject['currentQuestion'] !== null)
                     ? jsonObject['currentQuestion']
                     : "?";
+                currentQuestionNumber = jsonObject['currentQuestion'];
+
 
                 qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
             }
 
             // Question text
-            document.getElementById("question").innerHTML = jsonObject['questionText'] || "";
+
 
             // Clear options
             let optionsEl = document.getElementById("options");
@@ -227,10 +235,18 @@ function getLocation() {
 // Answer
 function Answer(ans) {
     let sessions = getSession();
-    let qIndex = jsonObject['currentQuestion'];
-    let qNum = (qIndex !== undefined && qIndex !== null) ? (qIndex + 1) : "?";
+    function Answer(ans) {
+        let sessions = getSession();
 
-    qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
+        // Use stored question number
+        let qNum = (currentQuestionNumber !== null)
+            ? currentQuestionNumber
+            : "?";
+
+        let qNumEl = document.getElementById("question-number");
+        if (qNumEl) {
+            qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
+        }
 
     fetch("https://codecyprus.org/th/api/answer?session=" + sessions + "&answer=" + ans)
         .then(function(response) { return response.json(); })
