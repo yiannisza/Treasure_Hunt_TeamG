@@ -220,7 +220,7 @@ function getLocation() {
     );
 }
 
-// Answer  ← THE FIX: removed the broken jsonObject/qNumEl lines that don't belong here
+// Answer
 function Answer(ans) {
     let sessions = getSession();
 

@@ -5,93 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play – Team G Treasure Hunt</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .qr-section {
+            max-width: 640px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+        .qr-toggle-btn {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            background: transparent;
+            border: 1px solid rgba(212,168,67,0.4);
+            color: var(--gold, #d4a843);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+        .qr-toggle-btn:hover { background: rgba(212,168,67,0.1); }
+        .qr-box {
+            display: none;
+            background: rgba(10,30,44,0.75);
+            border: 1px solid rgba(212,168,67,0.25);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+        #preview {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 10px;
+            background: #000;
+            display: block;
+            margin: 0 auto 14px;
+        }
+        .qr-result {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(212,168,67,0.25);
+            border-radius: 8px;
+            padding: 12px;
+            color: #22c0a4;
+            font-size: 0.9rem;
+            word-break: break-all;
+            min-height: 40px;
+            margin-top: 12px;
+        }
+        .qr-btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .qr-btn {
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid rgba(212,168,67,0.4);
+            background: transparent;
+            color: var(--gold, #d4a843);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .qr-btn:hover { background: rgba(212,168,67,0.1); }
+        .qr-note { font-size: 0.8rem; color: rgba(232,223,200,0.55); margin-bottom: 12px; }
+    </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="app-header">
     <a href="index.html" class="app-logo">⚓ Team G</a>
-
     <div class="score-badge">
         <span class="label">Score</span>
         <span class="value" id="Displayscore">–</span>
     </div>
-
     <div class="timer-badge">
         ⏱ <span class="timer">30:00</span>
     </div>
 </header>
 
-<script>
-    let opts = {
-        ['continuous']: true,
-        ['video']: document.getElementById('preview'),
-        ['mirror']: false,
-        ['captureImage']: false,
-        ['backgroundScan']: true,
-// Only applies to continuous mode. The period, in milliseconds, before the same QR
-// code will be recognized in succession. Default 5000 (5 seconds).
-        ['refractoryPeriod']: 5000,
-        ['scanPeriod']: 1
-    };
-
-    let camera_index = 0;
-    let all_cameras;
-
-    let scanner = new Instascan['Scanner'](opts);
-    document.getElementById("start").addEventListener('click', function () {
-        Instascan['Camera']['getCameras']().then(function (cameras) {
-            all_cameras = cameras;
-            if (cameras.length > 0) {
-                scanner['start'](cameras[camera_index]);
-            }
-            else {
-                console.error('No cameras found.');
-                alert("No cameras found.");
-            }
-        }).catch(function (e) {
-            console.error(e);
-        });
-
-        scanner['addListener']('scan', function (content) {
-            console.log(content);
-            document.getElementById("content").innerHTML = content;
-            scanner['stop']();
-        });
-    });
-
-    document.getElementById("change").addEventListener('click', function () {
-        camera_index++;
-        if (all_cameras && camera_index >= all_cameras.length) {
-            camera_index = 0;
-        }
-        console.log(camera_index);
-        if (all_cameras && all_cameras.length > 0) {
-            scanner['start'](all_cameras[camera_index]);
-        }
-    });
-
-
-</script>
+<!-- QUESTION CARD -->
 <main class="question-card">
-
     <div class="question-number" id="question-number">Loading question…</div>
-
-    <div class="question-text" id="question">
-    </div>
-
-
+    <div class="question-text" id="question"></div>
     <div id="options" class="options-grid"></div>
-
-
     <div class="action-row">
         <div id="skip"     style="display:none; flex:1;"></div>
         <div id="location" style="display:none; flex:1;"></div>
     </div>
-
 </main>
 
+<!-- QR SCANNER — elements must exist in HTML BEFORE the script runs -->
+<section class="qr-section">
+    <button class="qr-toggle-btn" id="qr-toggle-btn" onclick="toggleQR()">📷 QR Code Scanner</button>
+    <div class="qr-box" id="qr-box">
+        <p class="qr-note">Only use when the question includes a QR code</p>
+        <video id="preview"></video>
+        <div class="qr-result" id="content">Scan result will appear here…</div>
+        <div class="qr-btn-row">
+            <button class="qr-btn" id="start">▶ Start</button>
+            <button class="qr-btn" id="change">🔄 Switch Camera</button>
+            <button class="qr-btn" id="stop">⏹ Stop</button>
+        </div>
+    </div>
+</section>
 
+<!-- Scripts at the BOTTOM so all elements exist when JS runs -->
+<script src="instascan.min.js"></script>
 <script src="app.js"></script>
+<script>
+    let opts = {
+        continuous: true,
+        video: document.getElementById('preview'),  // exists now ✓
+        mirror: false,
+        captureImage: false,
+        backgroundScan: true,
+        refractoryPeriod: 5000,
+        scanPeriod: 1
+    };
+
+    let camera_index = 0;
+    let all_cameras = [];
+    let scanner = new Instascan.Scanner(opts);
+    let qrOpen = false;
+
+    // Show/hide the QR box
+    function toggleQR() {
+        qrOpen = !qrOpen;
+        document.getElementById('qr-box').style.display = qrOpen ? 'block' : 'none';
+        if (!qrOpen) { scanner.stop(); }
+    }
+
+    // When a QR code is scanned
+    scanner.addListener('scan', function(content) {
+        console.log('QR scanned:', content);
+        scanner.stop();
+
+        let resultEl = document.getElementById('content');
+
+        if (content.startsWith('http')) {
+            resultEl.innerHTML =
+                '<a href="' + content + '" target="_blank" style="color:#22c0a4;">' + content + '</a>' +
+                '<br><button class="qr-btn" style="margin-top:10px;" onclick="Answer(\'' + content + '\')">📤 Submit as Answer</button>';
+        } else {
+            resultEl.innerHTML =
+                '<strong style="color:#e8dfc8;">' + content + '</strong>' +
+                '<br><button class="qr-btn" style="margin-top:10px;" onclick="Answer(\'' + content + '\')">📤 Submit as Answer</button>';
+            let answerInput = document.getElementById('answer');
+            if (answerInput) { answerInput.value = content; }
+        }
+    });
+
+    // Start button
+    document.getElementById('start').addEventListener('click', function() {
+        Instascan.Camera.getCameras().then(function(cameras) {
+            all_cameras = cameras;
+            if (cameras.length > 0) {
+                scanner.start(cameras[camera_index]);
+                document.getElementById('content').textContent = 'Scanning…';
+            } else {
+                console.error('No cameras found.');
+                document.getElementById('content').textContent = 'No cameras found.';
+            }
+        }).catch(function(e) {
+            console.error(e);
+            document.getElementById('content').textContent = 'Camera error: ' + e;
+        });
+    });
+
+    // Switch camera button
+    document.getElementById('change').addEventListener('click', function() {
+        camera_index++;
+        if (camera_index >= all_cameras.length) { camera_index = 0; }
+        if (all_cameras.length > 0) { scanner.start(all_cameras[camera_index]); }
+    });
+
+    // Stop button
+    document.getElementById('stop').addEventListener('click', function() {
+        scanner.stop();
+        document.getElementById('content').textContent = 'Scanner stopped.';
+    });
+</script>
 
 </body>
 </html>
