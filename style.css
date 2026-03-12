@@ -1,7 +1,3 @@
-/* ============================================================
-   TEAM G – TREASURE HUNT  |  Global Stylesheet
-   Aesthetic: Dark Nautical / Treasure Map – deep teal + gold
-   ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Lato:wght@300;400;700&display=swap');
 
@@ -33,7 +29,7 @@ body {
     position: relative;
 }
 
-/* ── Background texture ── */
+/*  Background texture  */
 body::before {
     content: '';
     position: fixed;
@@ -89,9 +85,7 @@ body > * { position: relative; z-index: 1; }
 }
 .nav-links a:hover { color: var(--gold-light); }
 
-/* ═══════════════════════════════
-   HERO SECTION
-═══════════════════════════════ */
+/*  HERO SECTION*/
 .hero {
     text-align: center;
     padding: 100px 24px 80px;
@@ -193,9 +187,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     box-shadow: 0 6px 28px rgba(212,168,67,0.4);
 }
 
-/* ═══════════════════════════════
-   FEATURE CARDS
-═══════════════════════════════ */
+/* FEATURE CARDS*/
 .features {
     display: flex;
     justify-content: center;
@@ -231,9 +223,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     line-height: 1.6;
 }
 
-/* ═══════════════════════════════
-   TEAM SECTION
-═══════════════════════════════ */
+/*  TEAM SECTION*/
 .team {
     display: flex;
     justify-content: center;
@@ -285,9 +275,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     margin: 0 auto 60px;
 }
 
-/* ═══════════════════════════════
-   FOOTER
-═══════════════════════════════ */
+/* FOOTER*/
 .footer {
     border-top: 1px solid var(--border);
     padding: 40px 32px 32px;
