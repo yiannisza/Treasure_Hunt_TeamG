@@ -67,7 +67,7 @@
                 for (let i = 0; i < hunts.length; i++) {
                     let huntID = hunts[i].uuid;
                     let li = document.createElement("li");
-                    li.innerHTML = "<a href='start.html?treasure-hunt-id=" + huntID + "' class='hunt-item'>Map " + hunts[i].name + "</a>";
+                    li.innerHTML = "<a href='start.html?treasure-hunt-id=" + huntID + "' class='hunt-item'> " + hunts[i].name + "</a>";
                     list.appendChild(li);
                 }
             })

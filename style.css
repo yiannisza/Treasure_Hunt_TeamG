@@ -695,6 +695,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .hunt-item {
     display: block;
     padding: 18px 24px;
+    text-align: center;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -702,6 +703,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     text-decoration: none;
     font-weight: 700;
     transition: all 0.2s;
+    
 }
 .hunt-item:hover {
     border-color: var(--gold);
