@@ -90,19 +90,6 @@ body > * { position: relative; z-index: 1; }
     padding: 100px 24px 80px;
 }
 
-.hero-badge {
-    display: inline-block;
-    padding: 6px 18px;
-    border: 1px solid var(--gold);
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-}
-
 .hero h1 {
     font-family: 'Cinzel', serif;
     font-size: clamp(2.2rem, 6vw, 4rem);
