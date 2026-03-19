@@ -871,3 +871,11 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     opacity: 0.85;
 }
 
+body{
+background:
+linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+url("PirateMap.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
