@@ -41,11 +41,14 @@ function getNumQuestions() {
 
 // Countdown timer
 let timeInterval;
-let remainingTime = 0;
+let remainingTime = -1;
 
 function updatetime() {
-    let timer = document.querySelector('.timer');
+    let timer = document.getElementById('timer');
     if (!timer) return;
+    if (remainingTime === -1){
+        return;
+    }
 
     if (remainingTime <= 0) {
         clearInterval(timeInterval);
@@ -81,12 +84,9 @@ function initTimer() {
                     return;
                 }
             }
-            startTimer(30 * 60 * 1000); // fallback 30 mins
+            startTimer(hunts[0].maxDuration);
         })
-        .catch(function(err) {
-            console.error("Timer fetch error:", err);
-            startTimer(30 * 60 * 1000); // fallback 30 mins
-        });
+
 }
 
 // Toast notification
