@@ -108,6 +108,7 @@
                     setCookie("SES", jsonObject['session'], 20);
                     setCookie("NOQ", jsonObject['numOfQuestions'], 20);
                     setCookie("NOP", playerName, 20);
+                    setCookie("THID", resolvedHuntID, 20);
                     // ALSO pass session in the URL so app.html always has it
                     window.location.assign("app.html?session=" + jsonObject['session'] + "&noq=" + jsonObject['numOfQuestions']);
                 } else {

@@ -41,11 +41,9 @@ function getNumQuestions() {
 
 // Countdown timer
 let timeInterval;
-let remainingTime = 30 * 60;
+let remainingTime = 0;
 
 function updatetime() {
-    let seconds = remainingTime % 60;
-    let minutes = Math.floor(remainingTime / 60);
     let timer = document.querySelector('.timer');
     if (!timer) return;
 
@@ -55,6 +53,8 @@ function updatetime() {
         showToast("Time's up! Redirecting to leaderboard...", "info");
         setTimeout(function() { window.location.assign("leaderboard.html"); }, 2500);
     } else {
+        let minutes = Math.floor(remainingTime / 60);
+        let seconds = remainingTime % 60;
         let mm = minutes.toString().padStart(2, '0');
         let ss = seconds.toString().padStart(2, '0');
         timer.textContent = mm + ":" + ss;
@@ -62,11 +62,31 @@ function updatetime() {
     }
 }
 
-function startTimer() {
+function startTimer(maxDurationMs) {
     if (timeInterval) { clearInterval(timeInterval); }
-    remainingTime = 30 * 60;
+    remainingTime = Math.floor(maxDurationMs / 1000);
     updatetime();
     timeInterval = setInterval(updatetime, 1000);
+}
+
+function initTimer() {
+    fetch("https://codecyprus.org/th/api/list")
+        .then(function(response) { return response.json(); })
+        .then(function(jsonObject) {
+            let hunts = jsonObject.treasureHunts;
+            let thid = getCookie("THID");
+            for (let i = 0; i < hunts.length; i++) {
+                if (hunts[i].uuid === thid) {
+                    startTimer(hunts[i].maxDuration);
+                    return;
+                }
+            }
+            startTimer(30 * 60 * 1000); // fallback 30 mins
+        })
+        .catch(function(err) {
+            console.error("Timer fetch error:", err);
+            startTimer(30 * 60 * 1000); // fallback 30 mins
+        });
 }
 
 // Toast notification
@@ -295,5 +315,5 @@ setInterval(function() {
 window.onload = function () {
     getquestion();
     getscore();
-    startTimer();
+    initTimer();
 };
