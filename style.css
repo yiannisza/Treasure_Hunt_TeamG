@@ -871,3 +871,37 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     opacity: 0.85;
 }
 
+.notes{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.weeks{
+    background-color:#fff;
+    border:2px solid #4a90e2;
+    border-radius:10px;
+    padding:24px;
+    margin-bottom:30px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transition:transform 0.2s,box-shadow 0.2s;
+}
+
+.weeks:hover{
+    transform: translateY(-5px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.weeks h2{
+    margin-top:0;
+    color:#4a90e2;
+    border-bottom:2px solid #eee;
+    padding-bottom:10px;
+    margin-bottom:16px;
+}
+
+.weeks p{
+    margin:0;
+    line-height: 1.6;
+    color: #333;
+}
