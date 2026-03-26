@@ -72,6 +72,7 @@ function startTimer(maxDurationMs) {
     timeInterval = setInterval(updatetime, 1000);
 }
 
+
 function initTimer() {
     fetch("https://codecyprus.org/th/api/list")
         .then(function(response) { return response.json(); })
@@ -80,13 +81,27 @@ function initTimer() {
             let thid = getCookie("THID");
             for (let i = 0; i < hunts.length; i++) {
                 if (hunts[i].uuid === thid) {
-                    startTimer(hunts[i].maxDuration);
+                    let now = Date.now();
+                    let timeUntilEnd = hunts[i].endsOn - now;
+                    let maxDuration = hunts[i].maxDuration;
+
+                    // Use whichever is smaller
+                    let timerMs;
+                    if (timeUntilEnd < maxDuration) {
+                        timerMs = timeUntilEnd;
+                    } else {
+                        timerMs = maxDuration;
+                    }
+
+                    startTimer(timerMs);
                     return;
                 }
             }
             startTimer(hunts[0].maxDuration);
         })
-
+        .catch(function(err) {
+            console.error("Timer fetch error:", err);
+        });
 }
 
 // Toast notification

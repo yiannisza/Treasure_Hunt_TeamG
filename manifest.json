@@ -1,0 +1,21 @@
+{
+  "name": "Team G Treasure Hunt",
+  "short_name": "TreasureHunt",
+  "description": "Explore, solve puzzles, and discover hidden treasures across the map.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#2c3e50",
+  "theme_color": "#22c0a4",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
