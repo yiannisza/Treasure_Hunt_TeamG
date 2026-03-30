@@ -23,7 +23,7 @@ function setCookie(cookieName, cookieValue, expireDays) {
     document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 }
 
-// Get session – URL param first, cookie as fallback
+// Check the URL first, if no session there fall back to the cookie
 function getSession() {
     let urlParams = new URLSearchParams(window.location.search);
     let sessionFromURL = urlParams.get("session");
@@ -58,6 +58,7 @@ function updatetime() {
     } else {
         let minutes = Math.floor(remainingTime / 60);
         let seconds = remainingTime % 60;
+        // Pad with a leading zero so it shows 09 instead of 9
         let mm = minutes.toString().padStart(2, '0');
         let ss = seconds.toString().padStart(2, '0');
         timer.textContent = mm + ":" + ss;
@@ -72,7 +73,7 @@ function startTimer(maxDurationMs) {
     timeInterval = setInterval(updatetime, 1000);
 }
 
-
+// Fetch the hunt list to figure out how much time is left
 function initTimer() {
     fetch("https://codecyprus.org/th/api/list")
         .then(function(response) { return response.json(); })
@@ -85,7 +86,7 @@ function initTimer() {
                     let timeUntilEnd = hunts[i].endsOn - now;
                     let maxDuration = hunts[i].maxDuration;
 
-                    // Use whichever is smaller
+                    // Use whichever runs out first
                     let timerMs;
                     if (timeUntilEnd < maxDuration) {
                         timerMs = timeUntilEnd;
@@ -107,6 +108,7 @@ function initTimer() {
 // Toast notification
 function showToast(message, type) {
     let toast = document.getElementById("toast");
+    // Create the toast element if it doesn't exist yet
     if (!toast) {
         toast = document.createElement("div");
         toast.id = "toast";
@@ -117,6 +119,7 @@ function showToast(message, type) {
     void toast.offsetWidth;
     toast.classList.add("show");
     clearTimeout(toast._timeout);
+    // Hide the toast after 3 seconds
     toast._timeout = setTimeout(function() { toast.classList.remove("show"); }, 3000);
 }
 
@@ -145,24 +148,21 @@ function getquestion() {
                 return;
             }
 
-            // Question number
+            // Show which question number the player is on
             let qNumEl = document.getElementById("question-number");
             if (qNumEl) {
-
-                // let qNum = jsonObject['currentQuestion'] !== undefined ? jsonObject['currentQuestion']  : "?";
                 let qNum = jsonObject["currentQuestionIndex"] + 1;
                 qNumEl.textContent = "Question " + qNum + " of " + getNumQuestions();
             }
 
-            // Question text
             document.getElementById("question").innerHTML = jsonObject['questionText'] || "";
 
-            // Clear options
             let optionsEl = document.getElementById("options");
             optionsEl.innerHTML = "";
 
             let qt = jsonObject['questionType'];
 
+            // Render different input types depending on the question
             if (qt === "BOOLEAN") {
                 optionsEl.innerHTML =
                     '<div class="bool-grid">' +
@@ -181,11 +181,12 @@ function getquestion() {
                 }
 
             } else {
-                // TEXT / NUMERIC / INTEGER
+                // TEXT / NUMERIC / INTEGER - just a plain text box
                 optionsEl.innerHTML =
                     '<input type="text" id="answer" class="answer-input" placeholder="Type your answer...">' +
                     '<button class="submit-btn" onclick="Answer(document.getElementById(\'answer\').value)">Submit Answer</button>';
 
+                // Also allow submitting with Enter key
                 let input = document.getElementById("answer");
                 if (input) {
                     input.addEventListener("keydown", function(e) {
@@ -194,7 +195,6 @@ function getquestion() {
                 }
             }
 
-            // Skip button
             let skipEl = document.getElementById("skip");
             if (jsonObject['canBeSkipped'] === true) {
                 skipEl.innerHTML = '<button class="skip-btn" onclick="Skip()">⏭ Skip Question</button>';
@@ -203,7 +203,6 @@ function getquestion() {
                 skipEl.style.display = "none";
             }
 
-            // Location button
             let locationEl = document.getElementById("location");
             if (jsonObject['requiresLocation'] === true) {
                 locationEl.innerHTML = '<button class="location-btn" onclick="getLocation()">📍 Update My Location</button>';
@@ -275,6 +274,7 @@ function Answer(ans) {
             } else if (jsonObject['correct'] === true) {
                 showToast("✅ " + (jsonObject['message'] || "Correct!"), "correct");
                 getscore();
+                // Small delay before loading the next question
                 setTimeout(getquestion, 800);
             } else if (jsonObject['status'] === "ERROR") {
                 showToast((jsonObject['errorMessages'] || ["Error."]).join(" "), "wrong");
@@ -321,12 +321,12 @@ function getscore() {
         });
 }
 
-// Periodic location update every 2 minutes
+// Send location every 2 minutes in the background
 setInterval(function() {
     if (getSession()) getLocationSilent();
 }, 2 * 60 * 1000);
 
-// Init
+
 window.onload = function () {
     getquestion();
     getscore();
