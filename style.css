@@ -16,6 +16,13 @@
     --radius:       14px;
 }
 
+/* role color */
+.roles {
+    color: var(--gold);
+    font-weight: bold;
+}
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
