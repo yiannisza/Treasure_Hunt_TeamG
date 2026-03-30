@@ -58,7 +58,6 @@ function updatetime() {
     } else {
         let minutes = Math.floor(remainingTime / 60);
         let seconds = remainingTime % 60;
-        // Pad with a leading zero so it shows 09 instead of 9
         let mm = minutes.toString().padStart(2, '0');
         let ss = seconds.toString().padStart(2, '0');
         timer.textContent = mm + ":" + ss;
