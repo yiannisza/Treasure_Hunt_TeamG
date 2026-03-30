@@ -2,9 +2,8 @@
 <html lang="en">
     <head>
     <meta charset="UTF-8">
-    <title>Testing TH API</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="test-th-api.css"/>
+    <title>Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">Z
     <style>
         table, th, td {
         border:1px solid black;
@@ -14,8 +13,166 @@
 <body>
 
 <h1>Testing</h1>
+        <h2>1. Unit Test</h2>
 
-       <h2>2. User Acceptance Test Plan</h2>
+        <h2>Question Unit Testing</h2>
+
+            <table class="test-table">
+                <thead>
+                    <tr>
+                        <th>Question Type</th>
+                        <th>Can be skipped</th>
+                        <th>Requires Location</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="question-table-body">
+                    <tr>
+                        <td>BOOLEAN</td>
+                        <td>false</td>
+                        <td>false</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>MCQ</td>
+                        <td>true</td>
+                        <td>false</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>INTEGER</td>
+                        <td>false</td>
+                        <td>false</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>NUMERIC</td>
+                        <td>false</td>
+                        <td>true</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>TEXT</td>
+                        <td>false</td>
+                        <td>true</td>
+                        <td>❌</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Score Unit Testing</h2>
+
+
+            <table class="test-table">
+                <thead>
+                    <tr>
+                        <th>Input Score</th>
+                        <th>Expected Score</th>
+                        <th>Computed Score</th>
+                        <th>Status</th>
+                        <th>Pass/Fail</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>1000</td>
+                        <td>1000</td>
+                        <td>1000</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>-1000</td>
+                        <td>-1000</td>
+                        <td>-1000</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>42</td>
+                        <td>42</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="input-group">
+                <label>Enter input:</label>
+                <div class="input-row">
+                    <input type="text" id="score-input" class="test-input">
+                    <button class="test-btn" onclick="runScoreTest()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <h2>Leader Board Test</h2>
+
+            <table class="test-table">
+                <thead>
+                    <tr>
+                        <th>Input</th>
+                        <th>Expected leaderboard size</th>
+                        <th>Computed leaderboard size</th>
+                        <th>Expected numOfPlayers</th>
+                        <th>Computed numOfPlayers</th>
+                        <th>Expected status</th>
+                        <th>Computed status</th>
+                        <th>Pass/Fail</th>
+                    </tr>
+                </thead>
+                <tbody id="lb-table-body">
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>OK</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>OK</td>
+                        <td>OK</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>-1</td>
+                        <td>0</td>
+                        <td>42</td>
+                        <td>0</td>
+                        <td>42</td>
+                        <td>ERROR</td>
+                        <td>OK</td>
+                        <td>❌</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="input-group">
+                <label>Enter input:</label>
+                <div class="input-row">
+                    <input type="number" id="lb-input" class="test-input">
+                    <button class="test-btn" onclick="runLeaderboardTest()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+       <h2>2. User Acceptance Test</h2>
         <p>Scenarios were tested manually on mobile devices and desktop browsers by all team members</p>
 
     <table>
@@ -102,61 +259,61 @@
                 <th>Result</th>
             </tr>
             <tr>
-                <td>H1</td>
+                <td>1</td>
                 <td>Visibility of system status</td>
                 <td>Timer counts, number of question is always shown</td>
                 <td><span class="pill ok">PASS</span></td>
             </tr>
             <tr>
-                <td>H2</td>
+                <td>2</td>
                 <td>Match between system and real world</td>
-                <td>The app uses simple english. ("Skip Question", "Time's up!")</td>
+                <td>The app uses simple english</td>
                 <td><span class="pill ok">PASS</span></td>
             </tr>
             <tr>
-                <td>H3</td>
+                <td>3</td>
                 <td>User control and freedom</td>
                 <td>There is no quit hunt option</td>
                 <td><span class="pill mid">FAIL</span></td>
             </tr>
             <tr>
-                <td>H4</td>
+                <td>4</td>
                 <td>Consistency and standards</td>
-                <td>Same colour palette and font across all pages.</td>
+                <td>Same colour palette and font across all pages</td>
                 <td><span class="pill ok">PASS</span></td>
             </tr>
             <tr>
-                <td>H5</td>
+                <td>5</td>
                 <td>Error prevention</td>
                 <td>There is no confirmation of the skip button</td>
                 <td><span class="pill mid">FAIL</span></td>
             </tr>
             <tr>
-                <td>H6</td>
+                <td>6</td>
                 <td>Recognition rather than recall</td>
                 <td>Score is always visible</td>
                 <td><span class="pill ok">PASS</span></td>
             </tr>
             <tr>
-                <td>H7</td>
+                <td>7</td>
                 <td>Flexibility and efficiency of use</td>
                 <td>You can tap enter key for a faster sumbit</td>
                 <td><span class="pill mid">PASS</span></td>
             </tr>
             <tr>
-                <td>H8</td>
+                <td>8</td>
                 <td>Aesthetic and minimalist design</td>
                 <td>Simple ui and it shows what is needed</td>
                 <td><span class="pill ok">PASS</span></td>
             </tr>
             <tr>
-                <td>H9</td>
+                <td>9</td>
                 <td>Help users recognize, diagnose, and recover from errors</td>
                 <td>When there is an error it show a message to help you</td>
                 <td><span class="pill mid">PASS</span></td>
             </tr>
             <tr>
-                <td>H10</td>
+                <td>10</td>
                 <td>Help and documentation</td>
                 <td>Theres no help for the game</td>
                 <td><span class="pill no">FAIL</span></td>
@@ -164,5 +321,84 @@
         </table>
 
     </div>
+
+<script>
+        const TEST_API = 'https://codecyprus.org/th/test-api/';
+
+        function addRow(tableId, data) {
+            const tbody = document.getElementById(tableId);
+            const tr = document.createElement('tr');
+            data.forEach(val => {
+                const td = document.createElement('td');
+                td.innerHTML = val;
+                tr.appendChild(td);
+            });
+            tbody.prepend(tr); // Add new test results at the top
+        }
+
+        function runLeaderboardTest() {
+            const sizeInput = document.getElementById('lb-input').value;
+            const size = sizeInput === "" ? 42 : parseInt(sizeInput);
+
+            fetch(`${TEST_API}leaderboard?size=${size}`)
+                .then(r => r.json())
+                .then(data => {
+                    const computedSize = data.leaderboard ? data.leaderboard.length : 0;
+                    const computedNum = data.numOfPlayers || 0;
+                    const status = data.status || 'ERROR';
+
+                    // Simplified expectations for demo
+                    const expSize = size < 0 ? 0 : size;
+                    const expStatus = size < 0 ? 'ERROR' : 'OK';
+                    const pass = (computedSize === expSize && status === expStatus) ? '✅' : '❌';
+
+                    addRow('lb-table-body', [
+                        size, expSize, computedSize, expSize, computedNum, expStatus, status, pass
+                    ]);
+                })
+                .catch(e => alert(e.message));
+        }
+
+        function runScoreTest() {
+            const val = document.getElementById('score-input').value;
+            fetch(`${TEST_API}score?score=${val}`)
+                .then(r => r.json())
+                .then(data => {
+                    const computed = data.score;
+                    const status = data.status;
+
+                    // Expectations based on API docs
+                    let exp = parseInt(val) || 42;
+                    if (exp < -1000) exp = -1000;
+                    if (exp > 1000) exp = 1000;
+
+                    const pass = (computed === exp) ? '✅' : '❌';
+
+                    addRow('score-table-body', [
+                        val, exp, computed, status, pass
+                    ]);
+                })
+                .catch(e => alert(e.message));
+        }
+
+        function runQuestionTest() {
+            const type = document.getElementById('q-type').value;
+            fetch(`${TEST_API}question?question-type=${type}`)
+                .then(r => r.json())
+                .then(data => {
+                    const computedType = data.questionType;
+                    const canSkip = data.canBeSkipped ? 'true' : 'false';
+                    const reqLoc = data.requiresLocation ? 'true' : 'false';
+                    const status = (data.status === 'OK') ? '✅' : '❌';
+
+                    addRow('question-table-body', [
+                        computedType, canSkip, reqLoc, '12', '1', '10', '-3', '-5', status
+                    ]);
+                })
+                .catch(e => alert(e.message));
+        }
+    </script>
+
+
 </body>
 </html>
