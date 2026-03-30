@@ -887,11 +887,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     transition:transform 0.2s,box-shadow 0.2s;
 }
 
-.weeks:hover{
-    transform: translateY(-5px);
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
-}
-
 .weeks h2{
     margin-top:0;
     color:#4a90e2;
