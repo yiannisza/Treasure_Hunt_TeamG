@@ -2,18 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Lato:wght@300;400;700&display=swap');
 
 :root {
-    --bg-deep:      #060e14;
-    --bg-mid:       #0a1c28;
-    --bg-card:      rgba(10, 30, 44, 0.75);
-    --gold:         #d4a843;
-    --gold-light:   #f0c96a;
-    --teal:         #1a8f7a;
-    --teal-light:   #22c0a4;
-    --text:         #e8dfc8;
-    --text-muted:   rgba(232,223,200,0.55);
-    --border:       rgba(212,168,67,0.25);
-    --shadow:       0 8px 40px rgba(0,0,0,0.55);
-    --radius:       14px;
+    --bg-deep: #060e14;
+    --bg-mid: #0a1c28;
+    --bg-card: rgba(10, 30, 44, 0.75);
+    --gold: #d4a843;
+    --gold-light: #f0c96a;
+    --teal: #1a8f7a;
+    --teal-light: #22c0a4;
+    --text: #e8dfc8;
+    --text-muted: rgba(232,223,200,0.55);
+    --border: rgba(212,168,67,0.25);
+    --shadow: 0 8px 40px rgba(0,0,0,0.55);
+    --radius: 14px;
 }
 
 /* role color */
@@ -51,9 +51,7 @@ body::before {
 
 body > * { position: relative; z-index: 1; }
 
-/* ═══════════════════════════════
-   NAVIGATION BAR
-═══════════════════════════════ */
+/* NAVIGATION BAR*/
 .navbar {
     display: flex;
     align-items: center;
@@ -124,9 +122,7 @@ body > * { position: relative; z-index: 1; }
     flex-wrap: wrap;
 }
 
-/* ═══════════════════════════════
-   BUTTONS
-═══════════════════════════════ */
+/* BUTTONS*/
 .btn {
     display: inline-block;
     padding: 14px 32px;
@@ -138,7 +134,7 @@ body > * { position: relative; z-index: 1; }
     text-decoration: none;
     border: none;
     cursor: pointer;
-    
+
 }
 
 .btn-primary {
@@ -248,9 +244,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .team-card .name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
 .team-card .role { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
 
-/* ═══════════════════════════════
-   DIVIDER
-═══════════════════════════════ */
+/* DIVIDER */
 .divider {
     width: 80px;
     height: 2px;
@@ -330,9 +324,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     background: rgba(212,168,67,0.08);
 }
 
-/* ═══════════════════════════════
-   APP PAGE – GAME UI
-═══════════════════════════════ */
+/* APP PAGE – GAME UI*/
 .app-header {
     display: flex;
     align-items: center;
@@ -557,9 +549,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .toast.wrong   { border-color: #e05c5c; color: #e05c5c; }
 .toast.info    { border-color: var(--gold); color: var(--gold); }
 
-/* ═══════════════════════════════
-   LEADERBOARD
-═══════════════════════════════ */
+/* LEADERBOARD */
 .leaderboard-wrap {
     max-width: 680px;
     margin: 40px auto;
@@ -598,9 +588,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .rank-2 td:first-child { color: #c0c0c0; }
 .rank-3 td:first-child { color: #cd7f32; }
 
-/* ═══════════════════════════════
-   START / FORM PAGE
-═══════════════════════════════ */
+/* START / FORM PAGE */
 .start-card {
     max-width: 420px;
     margin: 60px auto;
@@ -653,9 +641,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .form-input:focus { border-color: var(--gold); }
 .form-input::placeholder { color: var(--text-muted); }
 
-/* ═══════════════════════════════
-   HUNT LIST PAGE
-═══════════════════════════════ */
+/* HUNT LIST PAGE */
 .hunt-list {
     max-width: 500px;
     margin: 0 auto;
@@ -675,7 +661,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     color: var(--text);
     text-decoration: none;
     font-weight: 700;
-    
+
 }
 .hunt-item:hover {
     border-color: var(--gold);
@@ -691,9 +677,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     padding: 16px;
 }
 
-/* ═══════════════════════════════
-   TEST PAGE
-═══════════════════════════════ */
+/* TEST PAGE */
 .test-wrap {
     max-width: 800px;
     margin: 40px auto;
@@ -744,9 +728,7 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .pass { color: #22c55e; font-weight: 700; }
 .fail { color: #e05c5c; font-weight: 700; }
 
-/* ═══════════════════════════════
-   NOTES PAGE
-═══════════════════════════════ */
+/* NOTES PAGE*/
 .notes-wrap {
     max-width: 740px;
     margin: 40px auto;
