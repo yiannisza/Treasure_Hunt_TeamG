@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Lato:wght@300;400;700&display=swap');
 
 :root {
@@ -115,13 +114,6 @@ body > * { position: relative; z-index: 1; }
     font-weight: 300;
 }
 
-.hero-actions {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 /* BUTTONS*/
 .btn {
     display: inline-block;
@@ -134,26 +126,6 @@ body > * { position: relative; z-index: 1; }
     text-decoration: none;
     border: none;
     cursor: pointer;
-
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    color: #0a0600;
-}
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 28px rgba(212,168,67,0.45);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-}
-.btn-secondary:hover {
-    border-color: var(--gold);
-    color: var(--gold);
 }
 
 /* Legacy .btn fallback (start page etc.) */
@@ -211,38 +183,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     text-align: center;
     margin: 60px 0;
 }
-
-.team-section {
-    padding: 60px 24px;
-    text-align: center;
-}
-
-.section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.6rem;
-    color: var(--gold);
-    margin-bottom: 36px;
-}
-
-.team-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.team-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 28px;
-    min-width: 150px;
-}
-.team-card:hover { border-color: var(--teal-light); }
-.team-card .name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
-.team-card .role { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
 
 /* DIVIDER */
 .divider {
@@ -306,24 +246,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     margin-bottom: 24px;
 }
 
-.social-icon-btn {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-.social-icon-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: rgba(212,168,67,0.08);
-}
-
 /* APP PAGE – GAME UI*/
 .app-header {
     display: flex;
@@ -368,7 +290,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     font-weight: 700;
     color: var(--teal-light);
 }
-.timer-badge .timer { font-size: 1.1rem; }
 
 .question-card {
     max-width: 640px;
@@ -549,45 +470,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 .toast.wrong   { border-color: #e05c5c; color: #e05c5c; }
 .toast.info    { border-color: var(--gold); color: var(--gold); }
 
-/* LEADERBOARD */
-.leaderboard-wrap {
-    max-width: 680px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.lb-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-.lb-table th {
-    background: rgba(212,168,67,0.12);
-    color: var(--gold);
-    padding: 14px 16px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: left;
-}
-.lb-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-    font-size: 0.9rem;
-}
-.lb-table tr:last-child td { border-bottom: none; }
-.lb-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-.lb-table td:first-child { color: var(--gold); font-weight: 700; }
-
-.rank-1 td:first-child { color: #ffd700; }
-.rank-2 td:first-child { color: #c0c0c0; }
-.rank-3 td:first-child { color: #cd7f32; }
-
 /* START / FORM PAGE */
 .start-card {
     max-width: 420px;
@@ -661,7 +543,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     color: var(--text);
     text-decoration: none;
     font-weight: 700;
-
 }
 .hunt-item:hover {
     border-color: var(--gold);
@@ -675,89 +556,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
     color: var(--text-muted);
     font-size: 0.9rem;
     padding: 16px;
-}
-
-/* TEST PAGE */
-.test-wrap {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 24px 80px;
-}
-.test-wrap h2 {
-    font-family: 'Cinzel', serif;
-    color: var(--gold);
-    font-size: 1.4rem;
-    margin: 40px 0 16px;
-}
-.test-wrap p, .test-wrap li {
-    color: var(--text-muted);
-    line-height: 1.8;
-    font-size: 0.95rem;
-}
-.test-wrap ul { padding-left: 20px; }
-.test-wrap table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
-}
-.test-wrap th {
-    background: rgba(212,168,67,0.1);
-    color: var(--gold);
-    padding: 12px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-align: left;
-    border: 1px solid var(--border);
-}
-.test-wrap td {
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: 0.88rem;
-}
-.test-wrap pre {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    overflow-x: auto;
-    font-size: 0.85rem;
-    color: var(--teal-light);
-    margin-top: 12px;
-}
-.pass { color: #22c55e; font-weight: 700; }
-.fail { color: #e05c5c; font-weight: 700; }
-
-/* NOTES PAGE*/
-.notes-wrap {
-    max-width: 740px;
-    margin: 40px auto;
-    padding: 0 24px 80px;
-}
-.meeting-entry {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 24px 28px;
-    margin-bottom: 20px;
-}
-.meeting-entry h3 {
-    font-family: 'Cinzel', serif;
-    color: var(--gold);
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-.meeting-entry .attendees {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 14px;
-}
-.meeting-entry ul {
-    padding-left: 18px;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.8;
 }
 
 .qr-section {
@@ -826,7 +624,6 @@ button.btn:not(.btn-primary):not(.btn-secondary):hover {
 }
 .qr-btn:hover { background: rgba(212,168,67,0.1); }
 .qr-note { font-size: 0.8rem; color: rgba(232,223,200,0.55); margin-bottom: 12px; }
-
 
 #scores-table {
     margin: 20px auto;
